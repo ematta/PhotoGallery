@@ -34,7 +34,14 @@ class PhotoGalleryViewModel: ViewModel() {
                         )
                     }
                 } catch (ex: Exception) {
-                    Log.e(TAG, "Failed to fetch gallery items", ex)
+                    Log.d(TAG, "Failed to fetch gallery items", ex)
+                    val items = photoRepository.fetchPhotos()
+                    _uiState.update { oldState ->
+                        oldState.copy(
+                            images = items,
+                            query = storedQuery
+                        )
+                    }
                 }
             }
         }
